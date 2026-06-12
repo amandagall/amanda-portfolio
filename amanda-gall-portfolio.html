@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en" id="top">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amanda Gall — Product strategist & experience designer</title>
+<meta name="description" content="Amanda Gall builds products that are strategic by design and felt by the people who use them. Currently building five original products. Two shaped.">
+<script>document.documentElement.classList.add('js');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@10..48,75..100,200..800&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&display=swap" rel="stylesheet">
+<style>
+/* ==========================================================
+   TOKENS — every colour and type decision derives from here
+   ========================================================== */
+:root{
+  /* palette — surf shack / coastal */
+  --sand:#F0EBE3;      /* base */
+  --ink:#1F3340;       /* deep tide — all primary type */
+  --ink-soft:#2A4150;  /* lifted ink for dark-section surfaces */
+  --glass:#6B9E9B;     /* ocean glass — the ONLY interactive colour */
+  --foam:#D6E8E4;      /* seafoam — tint panels, submerged type */
+  --drift:#B5A99A;     /* driftwood — rules, captions, metadata */
+  --kelp:#4A5A45;      /* kelp — scarce accent (in-progress marker) */
+
+  /* type */
+  --f-display:'Bricolage Grotesque', sans-serif;
+  --f-body:'Newsreader', Georgia, serif;
+  --t-hero:clamp(2.75rem, 10.5vw, 8.75rem);
+  --t-h2:clamp(2.1rem, 5.2vw, 3.9rem);
+  --t-h3:clamp(1.35rem, 2.8vw, 2.15rem);
+  --t-body:clamp(1.05rem, 0.95rem + 0.35vw, 1.2rem);
+  --t-note:0.72rem;
+
+  /* rhythm */
+  --space-section:clamp(5.5rem, 13vw, 11rem);
+  --gutter:clamp(1.25rem, 4vw, 3rem);
+  --content:min(1180px, 100% - 2*var(--gutter));
+
+  /* waterline state (JS animates the first two) */
+  --tide-base:62%;
+  --tide-drift:0%;
+}
+
+/* ====================== RESET / BASE ====================== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{
+  background:var(--sand);
+  color:var(--ink);
+  font-family:var(--f-body);
+  font-size:var(--t-body);
+  font-weight:400;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+::selection{background:var(--foam);color:var(--ink)}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+a:focus-visible,button:focus-visible{outline:2px solid var(--glass);outline-offset:4px;border-radius:2px}
+h1,h2,h3{
+  font-family:var(--f-display);
+  font-variation-settings:'wdth' 86;
+  font-weight:760;
+  line-height:0.96;
+  letter-spacing:-0.015em;
+  text-transform:uppercase;
+}
+p{max-width:34em}
+.skip{
+  position:absolute;left:-200vw;top:0;background:var(--ink);color:var(--sand);
+  padding:0.8rem 1.2rem;z-index:200;font-family:var(--f-display);font-size:0.85rem;
+}
+.skip:focus{left:0}
+
+/* ============== MARGINALIA — the field-note voice ============== */
+.note{
+  font-family:var(--f-display);
+  font-variation-settings:'wdth' 94;
+  font-weight:520;
+  font-size:var(--t-note);
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+  color:var(--drift);
+  line-height:1.7;
+}
+.note--ink{color:var(--ink)}
+.note--kelp{color:var(--kelp)}
+.dark .note{color:color-mix(in srgb, var(--drift) 75%, var(--ink))}
+
+/* ====================== LOADER ====================== */
+.loader{display:none}
+.js .loader{
+  display:flex;position:fixed;inset:0;z-index:120;background:var(--sand);
+  align-items:center;justify-content:center;flex-direction:column;gap:1.4rem;
+}
+.loader .note{color:var(--ink)}
+.loader-line{width:0;height:2px;background:var(--glass);max-width:240px}
+@media (prefers-reduced-motion: reduce){.js .loader{display:none}}
+
+/* ====================== NAV ====================== */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1rem var(--gutter);
+  transition:background .35s ease, box-shadow .35s ease;
+}
+.nav.scrolled{
+  background:color-mix(in srgb, var(--sand) 88%, transparent);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  box-shadow:0 1px 0 color-mix(in srgb, var(--drift) 45%, transparent);
+}
+.brand{
+  font-family:var(--f-display);font-weight:740;font-variation-settings:'wdth' 86;
+  text-transform:uppercase;letter-spacing:0.02em;font-size:1rem;
+}
+.nav-links{display:flex;gap:clamp(1.1rem,3vw,2.2rem)}
+.nav-links a{
+  font-family:var(--f-display);font-weight:540;font-size:0.82rem;
+  letter-spacing:0.1em;text-transform:uppercase;position:relative;
+}
+.nav-links a::after{
+  content:'';position:absolute;left:0;bottom:-5px;height:2px;width:100%;
+  background:var(--glass);transform:scaleX(0);transform-origin:left;
+  transition:transform .3s ease;
+}
+.nav-links a:hover::after,.nav-links a:focus-visible::after{transform:scaleX(1)}
+.nav-links a:hover{color:var(--glass)}
+@media (max-width:640px){.nav-links a.hide-s{display:none}}
+
+/* ====================== LAYOUT PRIMITIVES ====================== */
+.section{padding-block:var(--space-section)}
+.wrap{width:var(--content);margin-inline:auto}
+.grid{display:grid;grid-template-columns:1fr;gap:clamp(1.5rem,3vw,2.5rem)}
+@media (min-width:880px){.grid{grid-template-columns:repeat(12,1fr)}}
+.rule{border:0;border-top:1px solid var(--drift);opacity:.55}
+
+/* ====================== HERO + WATERLINE ====================== */
+.hero{
+  min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;
+  padding:7.5rem var(--gutter) clamp(3rem,7vh,5rem);position:relative;
+}
+.hero-notes{
+  display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;
+  width:var(--content);margin:0 auto auto;
+}
+.waterline-block{
+  position:relative;width:var(--content);margin-inline:auto;
+}
+.hl{
+  font-family:var(--f-display);
+  text-transform:uppercase;
+  font-size:var(--t-hero);
+  font-weight:790;
+  font-variation-settings:'wdth' 83;
+  line-height:0.93;
+  letter-spacing:-0.02em;
+  max-width:none;
+}
+.hl .line{display:block;overflow:hidden;padding-bottom:.1em;margin-bottom:-.1em}
+.hl .line>span{display:inline-block;will-change:transform}
+/* dry type — above the waterline */
+.hl--dry{
+  color:var(--ink);
+  clip-path:inset(0 0 calc(100% - var(--tide-base) - var(--tide-drift)) 0);
+}
+/* submerged type — below the waterline */
+.hl--wet{
+  position:absolute;inset:0;
+  color:var(--glass);
+  text-shadow:3px 0 0 color-mix(in srgb, var(--foam) 85%, transparent);
+  clip-path:inset(calc(var(--tide-base) + var(--tide-drift)) 0 0 0);
+  transform:translateX(2px);
+}
+.tideline{
+  position:absolute;left:-4vw;right:-4vw;
+  top:calc(var(--tide-base) + var(--tide-drift));
+  height:2px;
+  background:linear-gradient(90deg, transparent, var(--glass) 12%, var(--glass) 88%, transparent);
+  pointer-events:none;
+}
+@media (prefers-reduced-motion: reduce){
+  .hl--dry{clip-path:inset(0 0 38% 0)}
+  .hl--wet{clip-path:inset(62% 0 0 0)}
+  .tideline{top:62%}
+}
+.hero-sub{
+  width:var(--content);margin:clamp(2rem,5vh,3.5rem) auto 0;
+  display:grid;grid-template-columns:1fr;gap:1.5rem;
+}
+@media (min-width:880px){
+  .hero-sub{grid-template-columns:repeat(12,1fr)}
+  .hero-sub p{grid-column:7/13}
+  .hero-sub .note{grid-column:1/4;align-self:end}
+}
+.hero-sub p{font-size:clamp(1.1rem,1rem+0.6vw,1.45rem);line-height:1.5;max-width:30em}
+</style>
+<style>
+/* ====================== INTRO ====================== */
+.intro .grid p{font-size:clamp(1.15rem,1rem+0.8vw,1.6rem);line-height:1.55}
+@media (min-width:880px){
+  .intro .note{grid-column:1/3}
+  .intro .grid p{grid-column:4/11}
+}
+
+/* ====================== WORK ====================== */
+.work-head{margin-bottom:clamp(2.5rem,6vw,4.5rem)}
+.work-head h2{font-size:var(--t-h2);max-width:12em}
+@media (min-width:880px){
+  .work-head .note{grid-column:1/3;padding-top:.6rem}
+  .work-head h2{grid-column:4/13}
+}
+.work-row{
+  display:grid;grid-template-columns:1fr;gap:0.9rem;
+  padding-block:clamp(1.8rem,4vw,3rem);
+  border-top:1px solid color-mix(in srgb, var(--drift) 60%, transparent);
+  position:relative;
+}
+@media (min-width:880px){
+  .work-row{grid-template-columns:repeat(12,1fr);gap:2rem}
+  .work-row .work-meta{grid-column:1/4}
+  .work-row .work-body{grid-column:4/11}
+  .work-row .work-tag{grid-column:11/13;justify-self:end;text-align:right}
+}
+.work-meta{display:flex;flex-direction:column;gap:.35rem}
+.work-title{
+  font-size:var(--t-h3);
+  transition:color .3s ease, transform .35s cubic-bezier(.2,.7,.2,1);
+  display:inline-block;
+}
+.work-row:hover .work-title,.work-row:focus-within .work-title{
+  color:var(--glass);transform:translateX(10px);
+}
+.work-body p{margin-top:.7rem}
+
+/* ====================== FEATURE — SELF CHECK-IN (dark) ====================== */
+.dark{background:var(--ink);color:var(--sand)}
+.dark ::selection{background:var(--glass);color:var(--ink)}
+.dark .rule{border-color:color-mix(in srgb, var(--drift) 45%, var(--ink))}
+.feature h2{font-size:var(--t-h2);color:var(--sand);max-width:10em}
+.feature .lede{
+  font-size:clamp(1.1rem,1rem+0.5vw,1.4rem);line-height:1.55;
+  color:color-mix(in srgb, var(--sand) 88%, var(--ink));margin-top:1.4rem;
+}
+.feature .role-list{list-style:none;margin-top:2rem;display:grid;gap:.55rem}
+.feature .role-list li{
+  font-family:var(--f-display);font-weight:540;font-size:.82rem;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:color-mix(in srgb, var(--foam) 80%, var(--ink));
+  padding-left:1.1rem;position:relative;
+}
+.feature .role-list li::before{
+  content:'';position:absolute;left:0;top:.42em;width:.45rem;height:2px;background:var(--glass);
+}
+@media (min-width:880px){
+  .feature .feature-copy{grid-column:1/7}
+  .feature .feature-demo{grid-column:8/13}
+}
+.cta{
+  display:inline-block;margin-top:2.4rem;
+  font-family:var(--f-display);font-weight:640;font-size:.9rem;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--sand);border:1.5px solid var(--glass);
+  padding:.95rem 1.6rem;border-radius:2px;
+  transition:background .3s ease,color .3s ease,transform .3s ease;
+}
+.cta:hover,.cta:focus-visible{background:var(--glass);color:var(--ink);transform:translateY(-2px)}
+.cta--light{color:var(--ink)}
+.cta--light:hover,.cta--light:focus-visible{color:var(--ink)}
+
+/* SMS thread mock — styled to match the real product (iOS Messages) */
+.sms{
+  background:#FDFDFB;border-radius:18px;
+  padding:clamp(1.2rem,2.5vw,1.8rem);max-width:420px;
+  display:flex;flex-direction:column;gap:.7rem;
+  box-shadow:0 24px 60px -30px rgba(0,0,0,.55);
+}
+.sms .stamp{text-align:center;margin-block:.3rem;color:#9A9A98}
+.bubble{
+  font-family:var(--f-body);font-size:.98rem;line-height:1.45;
+  padding:.7rem 1rem;border-radius:18px;max-width:88%;
+}
+.bubble.in{background:#ECECEE;color:#1F2933;align-self:flex-start;border-bottom-left-radius:5px}
+.bubble.out{background:#0A84FF;color:#fff;align-self:flex-end;border-bottom-right-radius:5px;letter-spacing:.04em}
+
+/* ====================== THE RACK ====================== */
+.rack-section{background:var(--foam)}
+.rack-head h2{font-size:var(--t-h2);max-width:11em}
+@media (min-width:880px){
+  .rack-head .note{grid-column:1/3;padding-top:.6rem}
+  .rack-head h2{grid-column:4/13}
+}
+.rack{
+  display:grid;grid-template-columns:repeat(5,1fr);
+  gap:clamp(.6rem,2.5vw,2rem);
+  margin-top:clamp(3rem,7vw,5rem);
+  align-items:end;
+}
+.board{
+  width:min(100%,96px);margin-inline:auto;
+  height:clamp(150px,26vw,300px);
+  border-radius:50% 50% 10px 10px / 22% 22% 2% 2%;
+  position:relative;
+}
+.board--shipped{background:var(--glass)}
+.board--building{
+  border:2px solid var(--kelp);
+  background:repeating-linear-gradient(-45deg, transparent 0 7px, color-mix(in srgb, var(--kelp) 30%, transparent) 7px 9px);
+}
+.board--empty{border:2px dashed color-mix(in srgb, var(--drift) 80%, transparent)}
+.slot{display:flex;flex-direction:column;gap:1rem;text-align:center}
+.slot .note{line-height:1.5}
+.slot .slot-name{
+  font-family:var(--f-display);font-weight:680;font-variation-settings:'wdth' 86;
+  text-transform:uppercase;font-size:clamp(.7rem,1.6vw,.95rem);letter-spacing:.04em;
+}
+.slot .slot-status{font-size:.62rem}
+@media (max-width:560px){.slot .slot-name{min-height:2.2em}}
+
+/* ====================== ABOUT ====================== */
+.about .pull{
+  font-family:var(--f-display);font-weight:740;font-variation-settings:'wdth' 84;
+  text-transform:uppercase;line-height:1.02;letter-spacing:-0.015em;
+  font-size:clamp(1.7rem,4.2vw,3.1rem);max-width:14em;
+}
+@media (min-width:880px){
+  .about .note{grid-column:1/3;padding-top:.6rem}
+  .about .pull{grid-column:4/13}
+  .about-body{grid-column:4/10}
+  .about-side{grid-column:10/13}
+}
+.about-body{display:grid;gap:1.3rem;margin-top:clamp(2rem,5vw,3.5rem)}
+.about-side{margin-top:clamp(2rem,5vw,3.5rem);display:grid;gap:1.6rem;align-content:start}
+.about-side .note{line-height:1.8}
+
+/* ====================== HOW I THINK ====================== */
+.think-head h2{font-size:var(--t-h2)}
+@media (min-width:880px){
+  .think-head .note{grid-column:1/3;padding-top:.6rem}
+  .think-head h2{grid-column:4/13}
+}
+.think{margin-top:clamp(2.5rem,6vw,4rem)}
+.think-row{
+  display:grid;grid-template-columns:1fr;gap:.6rem;
+  padding-block:clamp(1.4rem,3vw,2.2rem);
+  border-top:1px solid color-mix(in srgb, var(--drift) 60%, transparent);
+}
+@media (min-width:880px){
+  .think-row{grid-template-columns:repeat(12,1fr);gap:2rem}
+  .think-row dt{grid-column:1/5}
+  .think-row dd{grid-column:5/11}
+}
+.think-row dt{
+  font-family:var(--f-display);font-weight:680;font-variation-settings:'wdth' 86;
+  text-transform:uppercase;font-size:clamp(1.05rem,2vw,1.45rem);letter-spacing:-0.01em;
+}
+.think-row dd{font-style:italic;font-size:clamp(1.02rem,.95rem+.3vw,1.18rem)}
+
+/* ====================== CV ====================== */
+.cv .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.5rem}
+.cv p{font-style:italic;color:color-mix(in srgb, var(--ink) 80%, var(--drift))}
+
+/* ====================== CONTACT / FOOTER ====================== */
+.contact h2{font-size:var(--t-h2);color:var(--sand)}
+.email{
+  display:inline-block;margin-top:1.8rem;
+  font-family:var(--f-display);font-weight:760;font-variation-settings:'wdth' 83;
+  text-transform:lowercase;letter-spacing:-0.015em;
+  font-size:clamp(1.5rem,5.2vw,4rem);line-height:1.05;
+  color:var(--sand);
+  background-image:linear-gradient(var(--glass),var(--glass));
+  background-repeat:no-repeat;background-size:0% 3px;background-position:0 100%;
+  transition:background-size .45s cubic-bezier(.2,.7,.2,1),color .3s ease;
+  padding-bottom:.12em;word-break:break-all;
+}
+.email:hover,.email:focus-visible{background-size:100% 3px;color:var(--foam)}
+.foot-notes{
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;
+  margin-top:clamp(3rem,8vw,5.5rem);
+}
+
+/* ====================== REVEALS ====================== */
+.rv{will-change:transform,opacity}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="loader" aria-hidden="true">
+  <span class="note">Amanda Gall — Oyen, AB</span>
+  <div class="loader-line"></div>
+</div>
+
+<nav class="nav" aria-label="Primary">
+  <a class="brand" href="#top">Amanda Gall</a>
+  <div class="nav-links">
+    <a href="#work">Work</a>
+    <a href="#self-check-in" class="hide-s">Self Check-In</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-notes">
+    <span class="note rv">51.35° N — 110.47° W<br>Oyen, Alberta</span>
+    <span class="note rv">Product 02 of 05 — in progress<br>Updated June 2026</span>
+  </div>
+
+  <div class="waterline-block">
+    <h1 class="hl hl--dry">
+      <span class="line"><span>Strategic</span></span>
+      <span class="line"><span>builder.</span></span>
+    </h1>
+    <p class="hl hl--wet" aria-hidden="true">
+      <span class="line"><span>Strategic</span></span>
+      <span class="line"><span>builder.</span></span>
+    </p>
+    <div class="tideline" aria-hidden="true"></div>
+  </div>
+
+  <div class="hero-sub">
+    <span class="note rv">Product strategist<br>& experience designer</span>
+    <p class="rv">Experience at the centre of everything I make. I'm Amanda Gall —
+    fifteen years making other people's products sharper and more profitable.
+    Now I'm building my own, five of them, and this is the workbench.</p>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ====================== INTRO ====================== -->
+<section class="section intro">
+  <div class="wrap grid">
+    <span class="note rv">The short version</span>
+    <p class="rv">Fifteen years at the intersection of product, brand, and UX — VP of Product
+    at Ackroo, Product Director at Paystone, and an industrial design degree from OCAD
+    underneath it all, which means I can't help caring how things feel in the hand. Even
+    when the hand is holding a phone. People don't experience strategy decks. They
+    experience products. I build for the second thing.</p>
+  </div>
+</section>
+
+<!-- ====================== WORK ====================== -->
+<section class="section work" id="work">
+  <div class="wrap">
+    <div class="grid work-head">
+      <span class="note rv">Selected work</span>
+      <h2 class="rv">Other people's products, made better. My own, made from scratch.</h2>
+    </div>
+
+    <article class="work-row rv">
+      <div class="work-meta">
+        <span class="note note--ink">01</span>
+        <span class="note">Founder · 2025 —<br>Product, brand, marketing, UI</span>
+      </div>
+      <div class="work-body">
+        <h3 class="work-title">Self Check-In</h3>
+        <p>An emotional wellness product with no app to download — on purpose. Tell it how
+        you're feeling and how you want to feel; it builds you a curated real-world
+        itinerary and delivers it one text message at a time. Designed, branded, and
+        built end to end. Live, with paying customers.</p>
+      </div>
+      <span class="note work-tag">From scratch</span>
+    </article>
+
+    <article class="work-row rv">
+      <div class="work-meta">
+        <span class="note note--ink">02</span>
+        <span class="note">Founder · in progress</span>
+      </div>
+      <div class="work-body">
+        <h3 class="work-title">Threshold</h3>
+        <p>Product two of five. In active build — details when it's ready. A little
+        mystery is good for a roadmap.</p>
+      </div>
+      <span class="note work-tag">From scratch</span>
+    </article>
+
+    <article class="work-row rv">
+      <div class="work-meta">
+        <span class="note note--ink">03</span>
+        <span class="note">VP of Product</span>
+      </div>
+      <div class="work-body">
+        <h3 class="work-title">Ackroo</h3>
+        <p>Led product for a loyalty and payments platform assembled through acquisition —
+        which meant taking a portfolio of products that grew up apart and making them
+        behave like one. Strategy, roadmap, and the unglamorous work of making complex
+        systems feel simple to the merchants who relied on them.</p>
+      </div>
+      <span class="note work-tag">Platform consolidation</span>
+    </article>
+
+    <article class="work-row rv">
+      <div class="work-meta">
+        <span class="note note--ink">04</span>
+        <span class="note">Product Director</span>
+      </div>
+      <div class="work-body">
+        <h3 class="work-title">Paystone</h3>
+        <p>Directed product across payments and customer loyalty tools for small businesses —
+        the kind of software where a confusing screen costs someone real money before lunch.
+        Where I learned that in fintech, trust isn't a brand value. It's a feature.</p>
+      </div>
+      <span class="note work-tag">Fintech / loyalty</span>
+    </article>
+    <hr class="rule">
+  </div>
+</section>
+
+<!-- ====================== FEATURE: SELF CHECK-IN ====================== -->
+<section class="section dark feature" id="self-check-in">
+  <div class="wrap grid">
+    <div class="feature-copy">
+      <span class="note rv">Flagship — live now</span>
+      <h2 class="rv" style="margin-top:1rem">Self Check-In</h2>
+      <p class="lede rv">Most wellness products ask you to open another app and stare at
+      another screen. Self Check-In does the opposite: it sends you back out into the
+      world. You describe your emotional state and the one you want instead; it responds
+      with a real itinerary — places, timing, small instructions — arriving progressively
+      by SMS, like a thoughtful friend who plans well.</p>
+      <ul class="role-list rv">
+        <li>Product strategy & concept</li>
+        <li>Brand, voice & marketing</li>
+        <li>Experience & UI design</li>
+        <li>Built and shipped, with co-founder Alicia</li>
+      </ul>
+      <a class="cta rv" href="https://selfcheck-in.ca" target="_blank" rel="noopener" aria-label="Visit Self Check-In">See it in the wild ↗</a>
+    </div>
+    <div class="feature-demo rv">
+      <div class="sms" role="img" aria-label="Real Self Check-In text message exchange: the service prompts the user to reply NEXT, then reveals a surprise bookstore stop">
+        <span class="note stamp">+1 (289) 513-8680</span>
+        <p class="bubble in">Reply NEXT when you're done and ready for your next stop. — Self Check-In</p>
+        <p class="bubble out">NEXT</p>
+        <span class="note stamp">Tuesday 11:37am</span>
+        <p class="bubble in">Stop 2 of 4 — This one is a surprise.<br><br>
+        Head to King West Books — 905 King St W. Walk in and take your time browsing.
+        Someone picked a book for you — ask the person at the counter for the Self
+        Check-In pick. You don't have to know anything about it before you open it.<br><br>
+        If you find something else that catches your eye, that's allowed too.
+        This is your time.<br><br>
+        Settle up at the counter when you're ready — the book is yours to keep.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== THE RACK ====================== -->
+<section class="section rack-section">
+  <div class="wrap">
+    <div class="grid rack-head">
+      <span class="note rv">Currently building — five products</span>
+      <h2 class="rv">Five original products. Two underway. Three to come.</h2>
+    </div>
+    <div class="rack" role="list" aria-label="Product build progress: two of five shipped or underway">
+      <div class="slot rv" role="listitem">
+        <div class="board board--shipped" aria-hidden="true"></div>
+        <span class="slot-name">Self Check-In</span>
+        <span class="note slot-status">01 — Live</span>
+      </div>
+      <div class="slot rv" role="listitem">
+        <div class="board board--building" aria-hidden="true"></div>
+        <span class="slot-name">Threshold</span>
+        <span class="note note--kelp slot-status">02 — In build</span>
+      </div>
+      <div class="slot rv" role="listitem">
+        <div class="board board--empty" aria-hidden="true"></div>
+        <span class="slot-name">—</span>
+        <span class="note slot-status">03 — Up next</span>
+      </div>
+      <div class="slot rv" role="listitem">
+        <div class="board board--empty" aria-hidden="true"></div>
+        <span class="slot-name">—</span>
+        <span class="note slot-status">04 — To come</span>
+      </div>
+      <div class="slot rv" role="listitem">
+        <div class="board board--empty" aria-hidden="true"></div>
+        <span class="slot-name">—</span>
+        <span class="note slot-status">05 — To come</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== ABOUT ====================== -->
+<section class="section about" id="about">
+  <div class="wrap grid">
+    <span class="note rv">About</span>
+    <p class="pull rv">"Generalist" used to feel like a confession. It turned out to be the whole point.</p>
+    <div class="about-body">
+      <p class="rv">I've run an upholstery practice, managed small businesses, staged real
+      estate, led marketing, and directed product teams. Every one of those jobs taught
+      the same lesson from a different angle: the thing people pay for is never the
+      strategy — it's the experience the strategy produces. My OCAD training in
+      industrial design is where that instinct started. The career since is where it
+      got tested.</p>
+      <p class="rv">In late 2024 my partner and I left Hamilton, Ontario for Oyen,
+      Alberta — population roughly a thousand, horizon roughly infinite — and bought a
+      hundred-year-old house that is itself an ongoing product roadmap. It turns out
+      distance from the noise is very good for judgment.</p>
+      <p class="rv">This chapter is deliberate. I'm building five original products
+      before the year is out — not to fill a gap, but because after fifteen years of
+      improving other people's products, I wanted to find out what mine look like.
+      What's next is senior product leadership somewhere ambitious, or collaboration
+      that needs both strategy and taste. I'm building either way.</p>
+    </div>
+    <div class="about-side">
+      <span class="note rv">Hamilton, ON → Oyen, AB<br>Relocated 2024</span>
+      <span class="note rv">B.Des Industrial Design<br>OCAD University</span>
+      <span class="note rv">Strategic · Organised<br>Creative · Resourceful</span>
+    </div>
+  </div>
+</section>
+
+<hr class="rule" style="width:var(--content);margin-inline:auto">
+
+<!-- ====================== HOW I THINK ====================== -->
+<section class="section thinking">
+  <div class="wrap">
+    <div class="grid think-head">
+      <span class="note rv">How I think</span>
+      <h2 class="rv">A map, not a tag cloud.</h2>
+    </div>
+    <dl class="think">
+      <div class="think-row rv">
+        <dt>Product strategy</dt>
+        <dd>Deciding what not to build is most of the job. I'm very good at the no.</dd>
+      </div>
+      <div class="think-row rv">
+        <dt>Experience design</dt>
+        <dd>If a flow needs a tooltip to explain itself, the flow is wrong. Trained to care how things feel — in the hand, on the screen, over a text message.</dd>
+      </div>
+      <div class="think-row rv">
+        <dt>Brand & marketing</dt>
+        <dd>Positioning is product work. I write the words, and I mean them.</dd>
+      </div>
+      <div class="think-row rv">
+        <dt>Building from scratch</dt>
+        <dd>Zero to one including the unglamorous parts: the pricing page, the Twilio bill, the first cold email.</dd>
+      </div>
+      <div class="think-row rv">
+        <dt>Working within constraints</dt>
+        <dd>Small teams, small budgets, hundred-year-old houses. A constraint is a brief, not an excuse.</dd>
+      </div>
+    </dl>
+    <hr class="rule">
+  </div>
+</section>
+
+<!-- ====================== CV ====================== -->
+<section class="section cv" style="padding-top:0">
+  <div class="wrap rv">
+    <p>For the version with dates and bullet points —</p>
+    <a class="cta cta--light" href="#" download aria-label="Download CV as PDF">Download CV (PDF)</a>
+  </div>
+</section>
+
+</main>
+
+<!-- ====================== CONTACT ====================== -->
+<footer class="section dark contact" id="contact">
+  <div class="wrap">
+    <span class="note rv">Contact</span>
+    <h2 class="rv" style="margin-top:1rem">Say hello.</h2>
+    <a class="email rv" href="mailto:hello@amandagall.com">hello@amandagall.com</a>
+    <div class="foot-notes">
+      <span class="note rv">Replies from Oyen, AB — Mountain Time</span>
+      <span class="note rv">© 2026 Amanda Gall — built, not templated</span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+(function(){
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var hasGsap = typeof gsap !== 'undefined';
+  var loader = document.querySelector('.loader');
+
+  /* nav background on scroll — cheap, runs regardless */
+  var nav = document.querySelector('.nav');
+  var onScroll = function(){ nav.classList.toggle('scrolled', window.scrollY > 40); };
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  if (reduced || !hasGsap){
+    if (loader) loader.remove();
+    return; /* static site: everything visible, waterline fixed via CSS */
+  }
+
+  gsap.registerPlugin(ScrollTrigger);
+  var block = document.querySelector('.waterline-block');
+  var heroLines = gsap.utils.toArray('.hl .line > span');
+
+  /* ---- arrival: loader + headline, one choreographed breath (~1.4s) ---- */
+  gsap.set(heroLines, {yPercent:110});
+  var tl = gsap.timeline({defaults:{ease:'power3.out'}});
+  tl.to('.loader-line', {width:240, duration:0.45, ease:'power2.inOut'})
+    .to('.loader', {autoAlpha:0, duration:0.4, onComplete:function(){ loader.remove(); }}, '+=0.1')
+    .to(heroLines, {yPercent:0, duration:0.9, stagger:0.09}, '-=0.25')
+    .from('.hero .note, .hero-sub p', {y:24, autoAlpha:0, duration:0.7, stagger:0.08}, '-=0.5')
+    .from('.tideline', {scaleX:0, transformOrigin:'left center', duration:0.8, ease:'power2.inOut'}, '-=0.7');
+
+  /* ---- waterline: slow swell drift ---- */
+  gsap.to(block, {'--tide-drift':'2.5%', duration:5.5, ease:'sine.inOut', yoyo:true, repeat:-1});
+
+  /* ---- waterline: tide rises as you scroll out of the hero ---- */
+  gsap.to(block, {
+    '--tide-base':'24%',
+    ease:'none',
+    scrollTrigger:{trigger:'.hero', start:'top top', end:'bottom 35%', scrub:0.6}
+  });
+
+  /* ---- submerged layer: faint lateral refraction ---- */
+  gsap.to('.hl--wet', {x:5, duration:4.2, ease:'sine.inOut', yoyo:true, repeat:-1});
+
+  /* ---- scroll reveals: enter with weight, settle, no bounce ---- */
+  gsap.utils.toArray('main .rv, footer .rv').forEach(function(el){
+    gsap.from(el, {
+      y:42, autoAlpha:0, duration:0.85, ease:'power3.out',
+      scrollTrigger:{trigger:el, start:'top 88%', once:true}
+    });
+  });
+
+  /* ---- rack: boards rise from the sand, staggered ---- */
+  gsap.from('.board', {
+    y:60, duration:0.9, ease:'power3.out', stagger:0.1,
+    scrollTrigger:{trigger:'.rack', start:'top 80%', once:true}
+  });
+})();
+</script>
+</body>
+</html>
