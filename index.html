@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Amanda Gall — Product strategist & experience designer</title>
-<meta name="description" content="Amanda Gall builds products that are strategic by design and felt by the people who use them. Currently building five original products. Two shaped.">
+<meta name="description" content="Amanda Gall — product strategist & experience designer. Reads the water, then builds. Five original products in the shaping bay; two in the water.">
 <script>document.documentElement.classList.add('js');</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -382,6 +382,23 @@ p{max-width:34em}
   margin-top:clamp(3rem,8vw,5.5rem);
 }
 
+/* ====================== WAVE DIVIDERS ====================== */
+.wave{line-height:0;overflow:hidden}
+.wave svg{display:block;width:200%;height:clamp(38px,7vw,80px);will-change:transform}
+.wave--to-ink{background:var(--sand)}
+.wave--to-ink path{fill:var(--ink)}
+.wave--ink-to-foam{background:var(--ink)}
+.wave--ink-to-foam path{fill:var(--foam)}
+
+/* board stringers — the centre seam every real blank has */
+.board::after{
+  content:'';position:absolute;left:50%;top:5%;bottom:3%;width:2px;
+  transform:translateX(-50%);
+}
+.board--shipped::after{background:color-mix(in srgb, var(--ink) 28%, var(--glass))}
+.board--building::after{background:color-mix(in srgb, var(--kelp) 55%, transparent)}
+.board--empty::after{background:color-mix(in srgb, var(--drift) 45%, transparent)}
+
 /* ====================== REVEALS ====================== */
 .rv{will-change:transform,opacity}
 </style>
@@ -390,7 +407,7 @@ p{max-width:34em}
 <a class="skip" href="#main">Skip to content</a>
 
 <div class="loader" aria-hidden="true">
-  <span class="note">Amanda Gall — Oyen, AB</span>
+  <span class="note">Checking conditions — Oyen, AB</span>
   <div class="loader-line"></div>
 </div>
 
@@ -406,27 +423,28 @@ p{max-width:34em}
 
 <header class="hero">
   <div class="hero-notes">
-    <span class="note rv">51.35° N — 110.47° W<br>Oyen, Alberta</span>
-    <span class="note rv">Product 02 of 05 — in progress<br>Updated June 2026</span>
+    <span class="note rv">Surf report — Oyen, AB · 51.35° N<br>Flat. Nearest break ~1,100 km west.</span>
+    <span class="note rv">Conditions: building — 02 of 05<br>Updated June 2026</span>
   </div>
 
   <div class="waterline-block">
     <h1 class="hl hl--dry">
-      <span class="line"><span>Strategic</span></span>
-      <span class="line"><span>builder.</span></span>
+      <span class="line"><span>I read the water.</span></span>
+      <span class="line"><span>Then I build.</span></span>
     </h1>
     <p class="hl hl--wet" aria-hidden="true">
-      <span class="line"><span>Strategic</span></span>
-      <span class="line"><span>builder.</span></span>
+      <span class="line"><span>I read the water.</span></span>
+      <span class="line"><span>Then I build.</span></span>
     </p>
     <div class="tideline" aria-hidden="true"></div>
   </div>
 
   <div class="hero-sub">
     <span class="note rv">Product strategist<br>& experience designer</span>
-    <p class="rv">Experience at the centre of everything I make. I'm Amanda Gall —
-    fifteen years making other people's products sharper and more profitable.
-    Now I'm building my own, five of them, and this is the workbench.</p>
+    <p class="rv">Surfers don't fight the ocean — they study it, then commit. Same
+    method here. I'm Amanda Gall: surf enthusiast, product strategist, experience
+    designer. Fifteen years making other people's products work, now shaping five
+    of my own.</p>
   </div>
 </header>
 
@@ -437,10 +455,11 @@ p{max-width:34em}
   <div class="wrap grid">
     <span class="note rv">The short version</span>
     <p class="rv">Fifteen years at the intersection of product, brand, and UX — VP of Product
-    at Ackroo, Product Director at Paystone, and an industrial design degree from OCAD
-    underneath it all, which means I can't help caring how things feel in the hand. Even
-    when the hand is holding a phone. People don't experience strategy decks. They
-    experience products. I build for the second thing.</p>
+    at Ackroo, Product Director at Paystone, an industrial design degree from OCAD
+    underneath it all. I treat product the way cold-water surfers treat the ocean:
+    respect the conditions, do the homework, then paddle out and commit. Because people
+    don't experience strategy decks — they experience products. I build for the
+    second thing.</p>
   </div>
 </section>
 
@@ -449,7 +468,7 @@ p{max-width:34em}
   <div class="wrap">
     <div class="grid work-head">
       <span class="note rv">Selected work</span>
-      <h2 class="rv">Other people's products, made better. My own, made from scratch.</h2>
+      <h2 class="rv">Other people's products, made better. My own, shaped from blanks.</h2>
     </div>
 
     <article class="work-row rv">
@@ -474,8 +493,8 @@ p{max-width:34em}
       </div>
       <div class="work-body">
         <h3 class="work-title">Threshold</h3>
-        <p>Product two of five. In active build — details when it's ready. A little
-        mystery is good for a roadmap.</p>
+        <p>Product two of five. Still in the shaping bay — you'll see it when it's
+        ready for the water.</p>
       </div>
       <span class="note work-tag">From scratch</span>
     </article>
@@ -492,7 +511,7 @@ p{max-width:34em}
         behave like one. Strategy, roadmap, and the unglamorous work of making complex
         systems feel simple to the merchants who relied on them.</p>
       </div>
-      <span class="note work-tag">Platform consolidation</span>
+      <span class="note work-tag">Four boards, one quiver</span>
     </article>
 
     <article class="work-row rv">
@@ -513,10 +532,11 @@ p{max-width:34em}
 </section>
 
 <!-- ====================== FEATURE: SELF CHECK-IN ====================== -->
+<div class="wave wave--to-ink" aria-hidden="true"><svg viewBox="0 0 2880 80" preserveAspectRatio="none" focusable="false"><path d="M0,46 C120,16 240,16 360,46 C480,76 600,76 720,46 S960,16 1080,46 S1320,76 1440,46 S1680,16 1800,46 S2040,76 2160,46 S2400,16 2520,46 S2760,76 2880,46 L2880,80 L0,80 Z"/></svg></div>
 <section class="section dark feature" id="self-check-in">
   <div class="wrap grid">
     <div class="feature-copy">
-      <span class="note rv">Flagship — live now</span>
+      <span class="note rv">Flagship — in the water</span>
       <h2 class="rv" style="margin-top:1rem">Self Check-In</h2>
       <p class="lede rv">Most wellness products ask you to open another app and stare at
       another screen. Self Check-In does the opposite: it sends you back out into the
@@ -550,37 +570,38 @@ p{max-width:34em}
 </section>
 
 <!-- ====================== THE RACK ====================== -->
+<div class="wave wave--ink-to-foam" aria-hidden="true"><svg viewBox="0 0 2880 80" preserveAspectRatio="none" focusable="false"><path d="M0,46 C120,16 240,16 360,46 C480,76 600,76 720,46 S960,16 1080,46 S1320,76 1440,46 S1680,16 1800,46 S2040,76 2160,46 S2400,16 2520,46 S2760,76 2880,46 L2880,80 L0,80 Z"/></svg></div>
 <section class="section rack-section">
   <div class="wrap">
     <div class="grid rack-head">
-      <span class="note rv">Currently building — five products</span>
-      <h2 class="rv">Five original products. Two underway. Three to come.</h2>
+      <span class="note rv">The shaping bay — five boards</span>
+      <h2 class="rv">Five original products. Two shaped. Three blanks on the rack.</h2>
     </div>
-    <div class="rack" role="list" aria-label="Product build progress: two of five shipped or underway">
+    <div class="rack" role="list" aria-label="Product build progress, shown as a surfboard rack: two of five shaped, three blanks">
       <div class="slot rv" role="listitem">
         <div class="board board--shipped" aria-hidden="true"></div>
         <span class="slot-name">Self Check-In</span>
-        <span class="note slot-status">01 — Live</span>
+        <span class="note slot-status">01 — In the water</span>
       </div>
       <div class="slot rv" role="listitem">
         <div class="board board--building" aria-hidden="true"></div>
         <span class="slot-name">Threshold</span>
-        <span class="note note--kelp slot-status">02 — In build</span>
+        <span class="note note--kelp slot-status">02 — In the bay</span>
       </div>
       <div class="slot rv" role="listitem">
         <div class="board board--empty" aria-hidden="true"></div>
         <span class="slot-name">—</span>
-        <span class="note slot-status">03 — Up next</span>
+        <span class="note slot-status">03 — Blank</span>
       </div>
       <div class="slot rv" role="listitem">
         <div class="board board--empty" aria-hidden="true"></div>
         <span class="slot-name">—</span>
-        <span class="note slot-status">04 — To come</span>
+        <span class="note slot-status">04 — Blank</span>
       </div>
       <div class="slot rv" role="listitem">
         <div class="board board--empty" aria-hidden="true"></div>
         <span class="slot-name">—</span>
-        <span class="note slot-status">05 — To come</span>
+        <span class="note slot-status">05 — Blank</span>
       </div>
     </div>
   </div>
@@ -599,9 +620,12 @@ p{max-width:34em}
       industrial design is where that instinct started. The career since is where it
       got tested.</p>
       <p class="rv">In late 2024 my partner and I left Hamilton, Ontario for Oyen,
-      Alberta — population roughly a thousand, horizon roughly infinite — and bought a
-      hundred-year-old house that is itself an ongoing product roadmap. It turns out
-      distance from the noise is very good for judgment.</p>
+      Alberta — population roughly a thousand, horizon roughly infinite. The prairie
+      does a convincing impression of the open ocean, and the nearest actual break is
+      eleven hundred kilometres west — which makes me either Alberta's most landlocked
+      surfer or proof that surf is a mindset. We bought a hundred-year-old house that
+      is itself an ongoing product roadmap. Distance from the noise is very good
+      for judgment.</p>
       <p class="rv">This chapter is deliberate. I'm building five original products
       before the year is out — not to fill a gap, but because after fifteen years of
       improving other people's products, I wanted to find out what mine look like.
@@ -611,7 +635,7 @@ p{max-width:34em}
     <div class="about-side">
       <span class="note rv">Hamilton, ON → Oyen, AB<br>Relocated 2024</span>
       <span class="note rv">B.Des Industrial Design<br>OCAD University</span>
-      <span class="note rv">Strategic · Organised<br>Creative · Resourceful</span>
+      <span class="note rv">Strategic · Organised<br>Creative · Resourceful<br>Wetsuit, not piña colada</span>
     </div>
   </div>
 </section>
@@ -623,28 +647,28 @@ p{max-width:34em}
   <div class="wrap">
     <div class="grid think-head">
       <span class="note rv">How I think</span>
-      <h2 class="rv">A map, not a tag cloud.</h2>
+      <h2 class="rv">Surf logic, applied to product.</h2>
     </div>
     <dl class="think">
       <div class="think-row rv">
-        <dt>Product strategy</dt>
-        <dd>Deciding what not to build is most of the job. I'm very good at the no.</dd>
+        <dt>Read the water</dt>
+        <dd>Strategy starts with conditions, not bravado — the market, the timing, the user. Deciding which wave to let pass is most of the job.</dd>
       </div>
       <div class="think-row rv">
-        <dt>Experience design</dt>
-        <dd>If a flow needs a tooltip to explain itself, the flow is wrong. Trained to care how things feel — in the hand, on the screen, over a text message.</dd>
+        <dt>Shape for the rider</dt>
+        <dd>Experience design: a board is judged in the water, not on the rack. If a flow needs a tooltip to explain itself, the flow is wrong.</dd>
       </div>
       <div class="think-row rv">
-        <dt>Brand & marketing</dt>
-        <dd>Positioning is product work. I write the words, and I mean them.</dd>
+        <dt>Style is substance</dt>
+        <dd>Brand and positioning are product work — how it rides matters as much as that it floats. I write the words, and I mean them.</dd>
       </div>
       <div class="think-row rv">
-        <dt>Building from scratch</dt>
-        <dd>Zero to one including the unglamorous parts: the pricing page, the Twilio bill, the first cold email.</dd>
+        <dt>Paddle back out</dt>
+        <dd>Building from scratch means wiping out in public — the pricing page, the Twilio bill, the first cold email. The real skill is the paddle back.</dd>
       </div>
       <div class="think-row rv">
-        <dt>Working within constraints</dt>
-        <dd>Small teams, small budgets, hundred-year-old houses. A constraint is a brief, not an excuse.</dd>
+        <dt>Surf what's in front of you</dt>
+        <dd>Constraints — small teams, small budgets, hundred-year-old houses. You don't get to order the conditions. You ride them.</dd>
       </div>
     </dl>
     <hr class="rule">
@@ -654,7 +678,7 @@ p{max-width:34em}
 <!-- ====================== CV ====================== -->
 <section class="section cv" style="padding-top:0">
   <div class="wrap rv">
-    <p>For the version with dates and bullet points —</p>
+    <p>For the dry-land version, with dates and bullet points —</p>
     <a class="cta cta--light" href="#" download aria-label="Download CV as PDF">Download CV (PDF)</a>
   </div>
 </section>
@@ -662,14 +686,15 @@ p{max-width:34em}
 </main>
 
 <!-- ====================== CONTACT ====================== -->
+<div class="wave wave--to-ink" aria-hidden="true"><svg viewBox="0 0 2880 80" preserveAspectRatio="none" focusable="false"><path d="M0,46 C120,16 240,16 360,46 C480,76 600,76 720,46 S960,16 1080,46 S1320,76 1440,46 S1680,16 1800,46 S2040,76 2160,46 S2400,16 2520,46 S2760,76 2880,46 L2880,80 L0,80 Z"/></svg></div>
 <footer class="section dark contact" id="contact">
   <div class="wrap">
     <span class="note rv">Contact</span>
-    <h2 class="rv" style="margin-top:1rem">Say hello.</h2>
+    <h2 class="rv" style="margin-top:1rem">The water's open.</h2>
     <a class="email rv" href="mailto:helloamandagall@gmail.com">helloamandagall@gmail.com</a>
     <div class="foot-notes">
-      <span class="note rv">Replies from Oyen, AB — Mountain Time</span>
-      <span class="note rv">© 2026 Amanda Gall — built, not templated</span>
+      <span class="note rv">Replies from Oyen, AB — Mountain Time<br>(No surf out here to distract me)</span>
+      <span class="note rv">© 2026 Amanda Gall — shaped by hand, not templated</span>
     </div>
   </div>
 </footer>
@@ -725,6 +750,11 @@ p{max-width:34em}
       y:42, autoAlpha:0, duration:0.85, ease:'power3.out',
       scrollTrigger:{trigger:el, start:'top 88%', once:true}
     });
+  });
+
+  /* ---- wave dividers: slow ambient drift, seamless loop ---- */
+  gsap.utils.toArray('.wave svg').forEach(function(w, i){
+    gsap.to(w, {xPercent:-50, duration:26 + i*4, ease:'none', repeat:-1});
   });
 
   /* ---- rack: boards rise from the sand, staggered ---- */
