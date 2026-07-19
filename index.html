@@ -381,6 +381,22 @@ p{max-width:34em}
   display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;
   margin-top:clamp(3rem,8vw,5.5rem);
 }
+/* ====================== How I Work ====================== */
+
+.see-how{
+  font-family:var(--f-display);font-weight:640;font-size:.78rem;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--glass);
+  position:relative;white-space:nowrap;display:inline-block;margin-top:.6rem;
+}
+.see-how::after{
+  content:'';position:absolute;left:0;bottom:-4px;height:1px;width:100%;
+  background:var(--glass);transform:scaleX(0);transform-origin:left;
+  transition:transform .3s ease;
+}
+.see-how:hover::after,.see-how:focus-visible::after{transform:scaleX(1)}
+@media (min-width:880px){
+  .think-row .see-how{grid-column:11/13;justify-self:end;text-align:right;align-self:start;margin-top:0}
+}
 
 /* ====================== WAVE DIVIDERS ====================== */
 .wave{line-height:0;overflow:hidden}
@@ -663,6 +679,8 @@ p{max-width:34em}
       <div class="think-row rv">
         <dt>Read the water</dt>
         <dd>Strategy starts with conditions, not bravado — the market, the timing, the user. Deciding which wave to let pass is most of the job.</dd>
+      <a class="see-how" href="how-i-work.html#read-the-water">See how I work →</a>
+</div>
       </div>
       <div class="think-row rv">
         <dt>Shape for the rider</dt>

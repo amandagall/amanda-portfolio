@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How I Work — Amanda Gall</title>
+<meta name="description" content="A closer look at Amanda Gall's process — mind mapping, PRD creation, product review demos, and the rest of the work behind the work.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@10..48,75..100,200..800&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sand:#F0EBE3;
+  --ink:#1F3340;
+  --glass:#6B9E9B;
+  --foam:#D6E8E4;
+  --drift:#B5A99A;
+  --kelp:#4A5A45;
+
+  --f-display:'Bricolage Grotesque', sans-serif;
+  --f-body:'Newsreader', Georgia, serif;
+  --t-h2:clamp(2.1rem, 5.2vw, 3.4rem);
+  --t-h3:clamp(1.5rem, 3vw, 2.1rem);
+  --t-body:clamp(1.05rem, 0.95rem + 0.35vw, 1.2rem);
+  --t-note:0.72rem;
+
+  --space-section:clamp(4.5rem, 10vw, 8rem);
+  --gutter:clamp(1.25rem, 4vw, 3rem);
+  --content:min(1180px, 100% - 2*var(--gutter));
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{
+  background:var(--sand);color:var(--ink);
+  font-family:var(--f-body);font-size:var(--t-body);font-weight:400;line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--foam);color:var(--ink)}
+a{color:inherit;text-decoration:none}
+a:focus-visible{outline:2px solid var(--glass);outline-offset:4px;border-radius:2px}
+h1,h2,h3{
+  font-family:var(--f-display);font-variation-settings:'wdth' 86;font-weight:760;
+  line-height:0.98;letter-spacing:-0.015em;text-transform:uppercase;
+}
+p{max-width:34em}
+.note{
+  font-family:var(--f-display);font-variation-settings:'wdth' 94;font-weight:520;
+  font-size:var(--t-note);letter-spacing:0.16em;text-transform:uppercase;color:var(--drift);
+}
+
+/* nav */
+.nav{
+  position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;
+  padding:1rem var(--gutter);background:color-mix(in srgb, var(--sand) 90%, transparent);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  box-shadow:0 1px 0 color-mix(in srgb, var(--drift) 45%, transparent);
+}
+.brand{
+  font-family:var(--f-display);font-weight:740;font-variation-settings:'wdth' 86;
+  text-transform:uppercase;letter-spacing:0.02em;font-size:1rem;
+}
+.back{
+  font-family:var(--f-display);font-weight:540;font-size:0.82rem;
+  letter-spacing:0.1em;text-transform:uppercase;color:var(--glass);
+}
+.back:hover{text-decoration:underline}
+
+/* layout */
+.wrap{width:var(--content);margin-inline:auto}
+.rule{border:0;border-top:1px solid var(--drift);opacity:.55}
+
+/* page header */
+.page-head{padding:var(--space-section) 0 clamp(2rem,5vw,3rem)}
+.page-head h1{font-size:var(--t-h2);max-width:16em;margin-top:.8rem}
+.page-head p{margin-top:1.3rem;font-size:clamp(1.05rem,1rem+0.4vw,1.3rem);max-width:38em;color:color-mix(in srgb, var(--ink) 85%, var(--drift))}
+
+/* quick jump index */
+.jump{display:flex;flex-wrap:wrap;gap:.6rem 1.4rem;margin-top:clamp(1.8rem,4vw,2.6rem)}
+.jump a{
+  font-family:var(--f-display);font-weight:600;font-size:.82rem;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--ink);border:1px solid var(--drift);border-radius:2px;
+  padding:.5rem .9rem;transition:border-color .25s ease,color .25s ease,background .25s ease;
+}
+.jump a:hover{border-color:var(--glass);color:var(--glass);background:color-mix(in srgb, var(--glass) 8%, transparent)}
+
+/* sections */
+.hiw-section{padding:clamp(3rem,7vw,5.5rem) 0;scroll-margin-top:5.5rem}
+.hiw-section:nth-of-type(even){background:var(--foam)}
+.hiw-inner{width:var(--content);margin-inline:auto}
+.hiw-kicker{display:flex;align-items:baseline;gap:.8rem;flex-wrap:wrap}
+.hiw-num{font-family:var(--f-display);font-weight:680;color:var(--glass);font-size:.85rem;letter-spacing:.08em}
+.hiw-section h2{font-size:var(--t-h3);margin-top:.6rem;max-width:16em}
+.hiw-lede{margin-top:1rem;font-style:italic;font-size:clamp(1.05rem,1rem+0.3vw,1.25rem);max-width:36em;color:color-mix(in srgb, var(--ink) 88%, var(--drift))}
+
+.gallery{
+  display:grid;grid-template-columns:1fr;gap:1.2rem;margin-top:clamp(2rem,4vw,2.8rem);
+}
+@media (min-width:720px){.gallery{grid-template-columns:repeat(2,1fr)}}
+.slot{
+  border:1.5px dashed color-mix(in srgb, var(--drift) 80%, transparent);
+  border-radius:4px;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;
+  text-align:center;padding:1.5rem;background:color-mix(in srgb, var(--sand) 60%, transparent);
+}
+.hiw-section:nth-of-type(even) .slot{background:color-mix(in srgb, var(--foam) 40%, var(--sand))}
+.slot span{
+  font-family:var(--f-display);font-weight:560;font-size:.78rem;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--drift);max-width:14em;line-height:1.6;
+}
+
+.writeup{
+  margin-top:clamp(1.6rem,3.5vw,2.2rem);padding:1.2rem 1.4rem;
+  border-left:2px solid var(--glass);
+}
+.writeup p{font-size:.98rem;color:color-mix(in srgb, var(--ink) 75%, var(--drift))}
+.writeup p + p{margin-top:.6rem}
+
+footer.hiw-foot{padding:clamp(3rem,7vw,4.5rem) 0}
+footer.hiw-foot p{font-style:italic;color:color-mix(in srgb, var(--ink) 75%, var(--drift))}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="brand" href="index.html">Amanda Gall</a>
+  <a class="back" href="index.html">&larr; Back to portfolio</a>
+</nav>
+
+<header class="page-head wrap">
+  <span class="note">How I work</span>
+  <h1>The process behind the principles.</h1>
+  <p>Five ideas guide how I approach product. Here's what each one actually looks
+  like in practice — the mind maps, the PRDs, the review demos, the messy middle.
+  [Placeholder intro — replace with your own framing once content is in.]</p>
+
+  <nav class="jump" aria-label="Jump to section">
+    <a href="#read-the-water">01 Read the water</a>
+    <a href="#shape-for-the-rider">02 Shape for the rider</a>
+    <a href="#style-is-substance">03 Style is substance</a>
+    <a href="#paddle-back-out">04 Paddle back out</a>
+    <a href="#surf-whats-in-front-of-you">05 Surf what's in front of you</a>
+  </nav>
+</header>
+
+<hr class="rule" style="width:var(--content);margin-inline:auto">
+
+<main>
+
+  <section class="hiw-section" id="read-the-water">
+    <div class="hiw-inner">
+      <div class="hiw-kicker"><span class="hiw-num">01</span><span class="note">Read the water</span></div>
+      <h2>How I read the water.</h2>
+      <p class="hiw-lede">Before anything gets built, I map the terrain — market, competitors,
+      the actual humans who'll use the thing. [Placeholder — swap in your real framing.]</p>
+      <div class="gallery">
+        <div class="slot"><span>Mind map — add screenshot here</span></div>
+        <div class="slot"><span>Discovery / research notes — add screenshot here</span></div>
+      </div>
+      <div class="writeup">
+        <p>[Add a short write-up: the tool you use for mind mapping, an example project,
+        and what changed because of what you found.]</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="hiw-section" id="shape-for-the-rider">
+    <div class="hiw-inner">
+      <div class="hiw-kicker"><span class="hiw-num">02</span><span class="note">Shape for the rider</span></div>
+      <h2>How I shape for the rider.</h2>
+      <p class="hiw-lede">Experience design starts on paper — flows, wireframes, and PRDs
+      that force the hard calls before a single pixel gets pushed. [Placeholder copy.]</p>
+      <div class="gallery">
+        <div class="slot"><span>PRD excerpt — add screenshot here</span></div>
+        <div class="slot"><span>Flow / wireframe — add screenshot here</span></div>
+      </div>
+      <div class="writeup">
+        <p>[Add a short write-up: how you structure a PRD, an example decision it forced,
+        or a flow that changed shape after user testing.]</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="hiw-section" id="style-is-substance">
+    <div class="hiw-inner">
+      <div class="hiw-kicker"><span class="hiw-num">03</span><span class="note">Style is substance</span></div>
+      <h2>Why style is substance.</h2>
+      <p class="hiw-lede">Brand, voice, and UI polish aren't garnish — they're part of
+      how the product actually functions. [Placeholder copy.]</p>
+      <div class="gallery">
+        <div class="slot"><span>Style guide / brand system — add screenshot here</span></div>
+        <div class="slot"><span>Copy / voice sample — add screenshot here</span></div>
+      </div>
+      <div class="writeup">
+        <p>[Add a short write-up: a brand decision you made and why, or a before/after
+        of copy that changed the outcome.]</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="hiw-section" id="paddle-back-out">
+    <div class="hiw-inner">
+      <div class="hiw-kicker"><span class="hiw-num">04</span><span class="note">Paddle back out</span></div>
+      <h2>How I paddle back out.</h2>
+      <p class="hiw-lede">Shipping from scratch means wiping out in public. This is the
+      part where I show the recovery, not just the highlight reel. [Placeholder copy.]</p>
+      <div class="gallery">
+        <div class="slot"><span>Product review / demo recording — add here</span></div>
+        <div class="slot"><span>Before / after or postmortem — add screenshot here</span></div>
+      </div>
+      <div class="writeup">
+        <p>[Add a short write-up: something that didn't work, what you learned, and
+        what you shipped next.]</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="hiw-section" id="surf-whats-in-front-of-you">
+    <div class="hiw-inner">
+      <div class="hiw-kicker"><span class="hiw-num">05</span><span class="note">Surf what's in front of you</span></div>
+      <h2>Surfing what's in front of me.</h2>
+      <p class="hiw-lede">Small teams, small budgets, a hundred-year-old house as a
+      side project — you don't get to order the conditions. [Placeholder copy.]</p>
+      <div class="gallery">
+        <div class="slot"><span>Constraint-driven build — add screenshot here</span></div>
+        <div class="slot"><span>Scrappy MVP / workaround — add screenshot here</span></div>
+      </div>
+      <div class="writeup">
+        <p>[Add a short write-up: a constraint you worked within and the workaround
+        that came out of it.]</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<hr class="rule" style="width:var(--content);margin-inline:auto">
+
+<footer class="hiw-foot wrap">
+  <p>Want to talk through any of this? <a href="index.html#contact" style="color:var(--glass);text-decoration:underline">Get in touch</a>.</p>
+</footer>
+
+</body>
+</html>
