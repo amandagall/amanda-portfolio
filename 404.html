@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 — Amanda Gall</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@10..48,75..100,200..800&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sand:#F0EBE3;
+  --ink:#1F3340;
+  --glass:#6B9E9B;
+  --drift:#B5A99A;
+  --f-display:'Bricolage Grotesque', sans-serif;
+  --f-body:'Newsreader', Georgia, serif;
+  --gutter:clamp(1.25rem, 4vw, 3rem);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:var(--sand);color:var(--ink);
+  font-family:var(--f-body);font-size:1.1rem;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  display:flex;flex-direction:column;
+  padding:1.5rem var(--gutter);
+}
+a{color:inherit;text-decoration:none}
+a:focus-visible{outline:2px solid var(--glass);outline-offset:4px;border-radius:2px}
+
+.brand{
+  font-family:var(--f-display);font-weight:740;font-variation-settings:'wdth' 86;
+  text-transform:uppercase;letter-spacing:0.02em;font-size:1rem;
+}
+
+main{
+  flex:1;display:flex;flex-direction:column;justify-content:center;
+  max-width:640px;margin:0 auto;text-align:left;padding-block:3rem;
+}
+.kicker{
+  font-family:var(--f-display);font-variation-settings:'wdth' 94;font-weight:520;
+  font-size:0.72rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--drift);
+}
+h1{
+  font-family:var(--f-display);font-variation-settings:'wdth' 83;font-weight:790;
+  text-transform:uppercase;line-height:0.95;letter-spacing:-0.02em;
+  font-size:clamp(2.4rem, 8vw, 5rem);margin-top:0.7rem;color:var(--ink);
+}
+h1 span{color:var(--glass)}
+p{margin-top:1.4rem;max-width:34em;font-size:clamp(1.05rem, 1rem + 0.4vw, 1.3rem)}
+
+.cta{
+  display:inline-block;margin-top:2.4rem;
+  font-family:var(--f-display);font-weight:640;font-size:.9rem;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink);border:1.5px solid var(--glass);
+  padding:.95rem 1.6rem;border-radius:2px;
+  transition:background .3s ease,color .3s ease,transform .3s ease;
+}
+.cta:hover,.cta:focus-visible{background:var(--glass);color:var(--sand);transform:translateY(-2px)}
+
+footer{
+  font-family:var(--f-display);font-variation-settings:'wdth' 94;font-weight:520;
+  font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--drift);
+  max-width:640px;margin:0 auto;width:100%;
+}
+</style>
+</head>
+<body>
+
+<a class="brand" href="/">Amanda Gall</a>
+
+<main>
+  <span class="kicker">404 — Wiped out</span>
+  <h1>This one <span>didn't hold.</span></h1>
+  <p>Wrong break, or the wave just isn't here yet — the page you were looking for
+  doesn't exist. Let's get you back to shore.</p>
+  <a class="cta" href="/">Back to the water →</a>
+</main>
+
+<footer>Amanda Gall — Oyen, AB</footer>
+
+</body>
+</html>
