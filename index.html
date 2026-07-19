@@ -141,7 +141,7 @@ p{max-width:34em}
 /* ====================== HERO + WATERLINE ====================== */
 .hero{
   min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;
-  padding:7.5rem var(--gutter) clamp(3rem,7vh,5rem);position:relative;
+  padding:7.5rem 0 clamp(3rem,7vh,5rem);position:relative;
 }
 .hero-notes{
   display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;
@@ -351,7 +351,8 @@ p{max-width:34em}
 @media (min-width:880px){
   .think-row{grid-template-columns:repeat(12,1fr);gap:2rem}
   .think-row dt{grid-column:1/5}
-  .think-row dd{grid-column:5/11}
+  .think-row dd{grid-column:5/10}
+  .think-row > *{min-width:0}
 }
 .think-row dt{
   font-family:var(--f-display);font-weight:680;font-variation-settings:'wdth' 86;
@@ -396,7 +397,7 @@ p{max-width:34em}
 }
 .see-how:hover::after,.see-how:focus-visible::after{transform:scaleX(1)}
 @media (min-width:880px){
-  .think-row .see-how{grid-column:11/13;justify-self:end;text-align:right;align-self:start;margin-top:0}
+  .think-row .see-how{grid-column:10/13;justify-self:end;text-align:right;align-self:start;margin-top:0}
 }
 
 /* ====================== WAVE DIVIDERS ====================== */
@@ -680,32 +681,27 @@ p{max-width:34em}
       <div class="think-row rv">
         <dt>Read the water</dt>
         <dd>Strategy starts with conditions, not bravado — the market, the timing, the user. Deciding which wave to let pass is most of the job.</dd>
-      <a class="see-how" href="how-i-work.html#read-the-water">See how I work →</a>
-</div>
+        <a class="see-how" href="how-i-work.html#read-the-water">See how I work →</a>
       </div>
       <div class="think-row rv">
         <dt>Shape for the rider</dt>
         <dd>Experience design: a board is judged in the water, not on the rack. If a flow needs a tooltip to explain itself, the flow is wrong.</dd>
-      <a class="see-how" href="how-i-work.html#shape-for-the-rider">See how I work →</a>
-</div>
+        <a class="see-how" href="how-i-work.html#shape-for-the-rider">See how I work →</a>
       </div>
       <div class="think-row rv">
         <dt>Style is substance</dt>
         <dd>Brand and positioning are product work — how it rides matters as much as that it floats. I write the words, and I mean them.</dd>
-      <a class="see-how" href="how-i-work.html#style-is-substance">See how I work →</a>
-</div>
+        <a class="see-how" href="how-i-work.html#style-is-substance">See how I work →</a>
       </div>
       <div class="think-row rv">
         <dt>Paddle back out</dt>
         <dd>Building from scratch means wiping out in public — the pricing page, the Twilio bill, the first cold email. The real skill is the paddle back.</dd>
-      <a class="see-how" href="how-i-work.html#paddle-back-out">See how I work →</a>
-</div>
+        <a class="see-how" href="how-i-work.html#paddle-back-out">See how I work →</a>
       </div>
       <div class="think-row rv">
         <dt>Surf what's in front of you</dt>
         <dd>Constraints — small teams, small budgets, hundred-year-old houses. You don't get to order the conditions. You ride them.</dd>
-      <a class="see-how" href="how-i-work.html#survive-the-wave">See how I work →</a>
-</div>
+        <a class="see-how" href="how-i-work.html#surf-whats-in-front-of-you">See how I work →</a>
       </div>
     </dl>
     <hr class="rule">
