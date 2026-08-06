@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How I Work — Amanda Gall</title>
+<meta name="description" content="A closer look at Amanda Gall's process — mind mapping, PRD creation, product review demos, and the rest of the work behind the work.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@10..48,75..100,200..800&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sand:#F0EBE3;
+  --ink:#1F3340;
+  --glass:#6B9E9B;
+  --foam:#D6E8E4;
+  --drift:#B5A99A;
+  --kelp:#4A5A45;
+
+  --f-display:'Bricolage Grotesque', sans-serif;
+  --f-body:'Newsreader', Georgia, serif;
+  --t-h2:clamp(2.1rem, 5.2vw, 3.4rem);
+  --t-h3:clamp(1.5rem, 3vw, 2.1rem);
+  --t-body:clamp(1.05rem, 0.95rem + 0.35vw, 1.2rem);
+  --t-note:0.72rem;
+
+  --space-section:clamp(4.5rem, 10vw, 8rem);
+  --gutter:clamp(1.25rem, 4vw, 3rem);
+  --content:min(1180px, 100% - 2*var(--gutter));
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{
+  background:var(--sand);color:var(--ink);
+  font-family:var(--f-body);font-size:var(--t-body);font-weight:400;line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--foam);color:var(--ink)}
+a{color:inherit;text-decoration:none}
+a:focus-visible{outline:2px solid var(--glass);outline-offset:4px;border-radius:2px}
+h1,h2,h3{
+  font-family:var(--f-display);font-variation-settings:'wdth' 86;font-weight:760;
+  line-height:0.98;letter-spacing:-0.015em;text-transform:uppercase;
+}
+p{max-width:34em}
+.note{
+  font-family:var(--f-display);font-variation-settings:'wdth' 94;font-weight:520;
+  font-size:var(--t-note);letter-spacing:0.16em;text-transform:uppercase;color:var(--drift);
+}
+
+/* nav */
+.nav{
+  position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;
+  padding:1rem var(--gutter);background:color-mix(in srgb, var(--sand) 90%, transparent);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  box-shadow:0 1px 0 color-mix(in srgb, var(--drift) 45%, transparent);
+}
+.brand{
+  font-family:var(--f-display);font-weight:740;font-variation-settings:'wdth' 86;
+  text-transform:uppercase;letter-spacing:0.02em;font-size:1rem;
+}
+.back{
+  font-family:var(--f-display);font-weight:540;font-size:0.82rem;
+  letter-spacing:0.1em;text-transform:uppercase;color:var(--glass);
+}
+.back:hover{text-decoration:underline}
+
+/* layout */
+.wrap{width:var(--content);margin-inline:auto}
+.rule{border:0;border-top:1px solid var(--drift);opacity:.55}
+
+/* page header */
+.page-head{padding:var(--space-section) 0 clamp(2rem,5vw,3rem)}
+.page-head h1{font-size:var(--t-h2);max-width:16em;margin-top:.8rem}
+.page-head p{margin-top:1.3rem;font-size:clamp(1.05rem,1rem+0.4vw,1.3rem);max-width:38em;color:color-mix(in srgb, var(--ink) 85%, var(--drift))}
+
+/* quick jump index */
+.jump{display:flex;flex-wrap:wrap;gap:.6rem 1.4rem;margin-top:clamp(1.8rem,4vw,2.6rem)}
+.jump a{
+  font-family:var(--f-display);font-weight:600;font-size:.82rem;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--ink);border:1px solid var(--drift);border-radius:2px;
+  padding:.5rem .9rem;transition:border-color .25s ease,color .25s ease,background .25s ease;
+}
+.jump a:hover{border-color:var(--glass);color:var(--glass);background:color-mix(in srgb, var(--glass) 8%, transparent)}
+
+/* sections */
+.hiw-section{padding:clamp(3rem,7vw,5.5rem) 0;scroll-margin-top:5.5rem}
+.hiw-section:nth-of-type(even){background:var(--foam)}
+.hiw-inner{width:var(--content);margin-inline:auto}
+.hiw-kicker{display:flex;align-items:baseline;gap:.8rem;flex-wrap:wrap}
+.hiw-num{font-family:var(--f-display);font-weight:680;color:var(--glass);font-size:.85rem;letter-spacing:.08em}
+.hiw-section h2{font-size:var(--t-h3);margin-top:.6rem;max-width:16em}
+.hiw-lede{margin-top:1rem;font-style:italic;font-size:clamp(1.05rem,1rem+0.3vw,1.25rem);max-width:36em;color:color-mix(in srgb, var(--ink) 88%, var(--drift))}
+
+.gallery{
+  display:grid;grid-template-columns:1fr;gap:1.2rem;margin-top:clamp(2rem,4vw,2.8rem);
+}
+@media (min-width:720px){.gallery{grid-template-columns:repeat(2,1fr)}}
+.slot{
+  border:1.5px dashed color-mix(in srgb, var(--drift) 80%, transparent);
+  border-radius:4px;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;
+  text-align:center;padding:1.5rem;background:color-mix(in srgb, var(--sand) 60%, transparent);
+}
+.hiw-section:nth-of-type(even) .slot{background:color-mix(in srgb, var(--foam) 40%, var(--sand))}
+.slot span{
+  font-family:var(--f-display);font-weight:560;font-size:.78rem;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--drift);max-width:14em;line-height:1.6;
+}
+
+.writeup{
+  margin-top:clamp(1.6rem,3.5vw,2.2rem);padding:1.2rem 1.4rem;
+  border-left:2px solid var(--glass);
+}
+.writeup p{font-size:.98rem;max-width:58em;color:color-mix(in srgb, var(--ink) 75%, var(--drift))}
+.writeup p + p{margin-top:.6rem}
+.example{margin-top:clamp(2rem,4vw,2.8rem);padding-top:clamp(1.6rem,3vw,2.2rem);border-top:1px solid color-mix(in srgb, var(--drift) 55%, transparent)}
+.example-title{
+  font-family:var(--f-display);font-variation-settings:'wdth' 86;font-weight:700;
+  text-transform:none;letter-spacing:-0.01em;font-size:clamp(1.2rem,2vw,1.5rem);
+  margin-top:.4rem;line-height:1.15;
+}
+.example-intro{margin-top:.9rem;font-size:.98rem;max-width:58em;color:color-mix(in srgb, var(--ink) 85%, var(--drift))}
+.table-wrap{margin-top:clamp(1.6rem,3vw,2.2rem);overflow-x:auto;border:1px solid color-mix(in srgb, var(--drift) 60%, transparent);border-radius:4px}
+.decision-table{width:100%;border-collapse:collapse;min-width:640px;background:color-mix(in srgb, var(--sand) 40%, white)}
+.decision-table th,.decision-table td{
+  text-align:left;padding:.65rem .9rem;font-size:.88rem;line-height:1.45;
+  border-bottom:1px solid color-mix(in srgb, var(--drift) 40%, transparent);
+  vertical-align:top;
+}
+.decision-table thead th{
+  font-family:var(--f-display);font-weight:640;font-size:.72rem;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--ink);background:color-mix(in srgb, var(--foam) 70%, var(--sand));
+  border-bottom:1.5px solid var(--glass);
+}
+.decision-table tbody th[scope="row"]{
+  font-family:var(--f-display);font-weight:600;font-size:.8rem;letter-spacing:.02em;
+  text-transform:none;color:var(--ink);white-space:nowrap;
+}
+.decision-table tbody tr:nth-child(even) td,.decision-table tbody tr:nth-child(even) th{
+  background:color-mix(in srgb, var(--foam) 35%, transparent);
+}
+.decision-table tbody tr:last-child th,.decision-table tbody tr:last-child td{border-bottom:none}
+.video-frame{
+  width:min(300px, 100%);margin:clamp(2rem,4vw,2.8rem) 0 0 0;
+  aspect-ratio:9/19.5;background:var(--ink);border-radius:2.2rem;padding:.5rem;
+  box-shadow:0 18px 40px -18px color-mix(in srgb, var(--ink) 55%, transparent);
+  position:relative;
+}
+.video-frame__notch{
+  position:absolute;top:.9rem;left:50%;transform:translateX(-50%);
+  width:32%;height:.4rem;border-radius:999px;background:color-mix(in srgb, black 40%, var(--ink));
+  z-index:2;
+}
+.video-frame__screen{
+  width:100%;height:100%;border-radius:1.7rem;overflow:hidden;position:relative;
+  border:1.5px dashed color-mix(in srgb, var(--foam) 70%, transparent);
+  background:color-mix(in srgb, var(--sand) 12%, var(--ink));
+  display:flex;align-items:center;justify-content:center;text-align:center;padding:1.8rem;
+}
+.video-frame__screen video{width:100%;height:100%;object-fit:cover;display:block}
+.video-frame__screen span{
+  font-family:var(--f-display);font-weight:560;font-size:.76rem;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--foam);max-width:12em;line-height:1.6;
+}
+.video-caption{margin-top:.9rem;text-align:left}
+
+footer.hiw-foot{padding:clamp(3rem,7vw,4.5rem) 0}
+footer.hiw-foot p{font-style:italic;color:color-mix(in srgb, var(--ink) 75%, var(--drift))}
+
+.carousel{margin-top:clamp(2rem,4vw,2.8rem);position:relative}
+.carousel__track{
+  display:flex;gap:1rem;overflow-x:auto;scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;padding-bottom:.75rem;
+  scrollbar-width:thin;scrollbar-color:var(--drift) transparent;
+}
+.carousel__track::-webkit-scrollbar{height:6px}
+.carousel__track::-webkit-scrollbar-thumb{background:var(--drift);border-radius:999px}
+.carousel__slide{flex:0 0 auto;width:min(420px, 85%);scroll-snap-align:start}
+.carousel__slide img{
+  width:100%;display:block;border-radius:4px;
+  border:1px solid color-mix(in srgb, var(--drift) 50%, transparent);
+  box-shadow:0 10px 24px -14px color-mix(in srgb, var(--ink) 40%, transparent);
+}
+.carousel__caption{margin-top:.6rem;font-size:.82rem;max-width:none;color:color-mix(in srgb, var(--ink) 75%, var(--drift))}
+.carousel__controls{display:flex;gap:.6rem;margin-top:1rem}
+.carousel__btn{
+  font-family:var(--f-display);font-weight:600;font-size:.78rem;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--ink);border:1px solid var(--drift);border-radius:2px;
+  padding:.5rem .9rem;background:transparent;cursor:pointer;
+  transition:border-color .25s ease,color .25s ease,background .25s ease;
+}
+.carousel__btn:hover{border-color:var(--glass);color:var(--glass);background:color-mix(in srgb, var(--glass) 8%, transparent)}
+.carousel--portrait .carousel__slide{width:min(220px, 60%)}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="brand" href="index.html">Amanda Gall</a>
+  <a class="back" href="index.html">&larr; Back to portfolio</a>
+</nav>
+
+<header class="page-head wrap">
+  <span class="note">How I work</span>
+  <h1>The process behind the principles.</h1>
+  <p>Five ideas guide how I approach product. Here's what each one actually looks
+like in practice — the trade-off tables, the intake flow logic, the disclaimer copy,
+the manual process I automated out of existence, and the product I built without
+a dev team. Real decisions, not case-study polish.</p>
+
+  <nav class="jump" aria-label="Jump to section">
+    <a href="#read-the-water">01 Read the water</a>
+    <a href="#shape-for-the-rider">02 Shape for the rider</a>
+    <a href="#style-is-substance">03 Style is substance</a>
+    <a href="#paddle-back-out">04 Paddle back out</a>
+    <a href="#surf-whats-in-front-of-you">05 Surf what's in front of you</a>
+  </nav>
+</header>
+
+<hr class="rule" style="width:var(--content);margin-inline:auto">
+
+<main>
+
+  <section class="hiw-section" id="read-the-water">
+  <div class="hiw-inner">
+    <div class="hiw-kicker"><span class="hiw-num">01</span><span class="note">Read the water</span></div>
+    <h2>How I read the water.</h2>
+    <p class="hiw-lede">Before anything gets built, I map the terrain — market, competitors,
+    the actual humans who'll use the thing. Deciding which wave to let pass is most of the job.</p>
+
+    <div class="example">
+      <span class="note">Example — Self Check-In</span>
+      <h3 class="example-title">Choosing the MVP platform</h3>
+      <p class="example-intro">Self Check-In is bootstrapped, and I had one goal for the MVP: get
+      a real person through a real experience within 90 days to test whether the core idea — an
+      emotionally-guided itinerary that reveals itself progressively, like a food tour — actually
+      created the feeling it promised. I wasn't trying to build the "right" product yet. I was
+      trying to read the conditions correctly before committing any real engineering time.</p>
+
+      <div class="table-wrap">
+        <table class="decision-table">
+          <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">Website + PDF/Email</th>
+              <th scope="col">SMS/WhatsApp Chatbot</th>
+              <th scope="col">Lightweight Web App</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Time to launch</th><td>Fast</td><td>Fast</td><td>Slowest</td></tr>
+            <tr><th scope="row">Cost to build</th><td>Lowest</td><td>Low-moderate</td><td>Highest</td></tr>
+            <tr><th scope="row">User friction</th><td>Medium</td><td>Lowest</td><td>Highest</td></tr>
+            <tr><th scope="row">Ability to test core emotional flow</th><td>Weak</td><td>Strong</td><td>Strong, but overbuilt</td></tr>
+            <tr><th scope="row">Element of surprise / pacing</th><td>Weak — revealed all at once</td><td>Strong — unlocks in real time</td><td>Possible, but weaker</td></tr>
+            <tr><th scope="row">Personalization integrity</th><td>Weak — trivially forwardable, loses meaning out of context</td><td>Strong — tied to one phone/session</td><td>Moderate</td></tr>
+            <tr><th scope="row">Competitive differentiation</th><td>Weak — too close to existing players</td><td>Strong — format itself differentiates</td><td>Weak — crowded space</td></tr>
+            <tr><th scope="row">Behavioural fit</th><td>Moderate</td><td>Strong — phone already in hand</td><td>Weak — new habit required</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="writeup">
+        <p>I ruled out the PDF first, for a reason that surprised me when I actually named it: it
+        wasn't just low-friction UX-wise, it was structurally wrong for what I was building. Once
+        it's a file, it can be forwarded to someone whose emotional state it wasn't built for —
+        the profile-based personalization that makes the whole thing work collapses the moment it
+        leaves the original context. SMS solved that, matched the progressive-reveal pacing I
+        wanted, needed no new behaviour from the user, and let me build and test the exact
+        mechanic I was most curious about — all without writing a line of app code. Reading the
+        conditions here meant recognizing that the "leanest" option on paper (the PDF) was
+        actually the wrong bet, because it failed on the dimension that mattered most.</p>
+      </div>
+    </div>
+
+    <div class="example">
+      <span class="note">Example — Ackroo</span>
+      <h3 class="example-title">Consolidating three merchant apps into one</h3>
+      <p class="example-intro">I stepped into this role in the middle of real organizational
+      flux, inheriting a stack that already had three separate apps — the original Ackroo app
+      (simple, in-house, offered to every vertical from hospitality to petroleum), Simpli
+      Connect's Custom App (bespoke builds outsourced to India, no repeatable process, no PM
+      oversight), and Simpli Connect's Shared App (free, broken for anyone in more than one
+      loyalty program, buried behind a confusing centralized app) — plus a costly new fourth app
+      already underway, positioned as a future marketplace. My job wasn't to pick the most
+      exciting option. It was to actually read what each of these four paths was, what it cost,
+      what it could become, and whether the newest, most invested-in one deserved to survive that
+      scrutiny.</p>
+
+      <div class="table-wrap">
+        <table class="decision-table">
+          <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">New "Improved Shared" App (in-flight)</th>
+              <th scope="col">Simpli Custom App</th>
+              <th scope="col">Simpli Shared App</th>
+              <th scope="col">Original Ackroo App</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Technical foundation</th>
+              <td>New build on Firebase, unproven, mid-flight</td>
+              <td>Auth0, built one-off per merchant</td>
+              <td>Auth0, multi-tenant, broke for multi-program users</td>
+              <td>Auth0, simple, already proven at scale</td>
+            </tr>
+            <tr>
+              <th scope="row">Build/maintenance model</th>
+              <td>Major spend already committed, more needed to finish</td>
+              <td>Up to 8 months per app, outsourced to India, no repeatable process</td>
+              <td>Existing, but plagued with registration failures</td>
+              <td>Live, in-house, one mobile expert, 2-week turnaround</td>
+            </tr>
+            <tr>
+              <th scope="row">Cost &amp; revenue model</th>
+              <td>Big spend, pitched as a future marketplace, unproven</td>
+              <td>High one-time fee per merchant, no recurring revenue</td>
+              <td>Free to merchants, no revenue at all</td>
+              <td>One-time setup fee only — but a foundation to build recurring SaaS on</td>
+            </tr>
+            <tr>
+              <th scope="row">Consistency &amp; quality</th>
+              <td>One more unproven app to maintain</td>
+              <td>Wildly inconsistent, "unattractive," no PM involved</td>
+              <td>Generic, undifferentiated beyond a barcode scan</td>
+              <td>Consistent single codebase, easy to extend uniformly</td>
+            </tr>
+            <tr>
+              <th scope="row">Fit across verticals</th>
+              <td>Not yet built with verticals in mind</td>
+              <td>Custom per merchant, but not scalable</td>
+              <td>One-size-fits-all for hospitality, auto, and petro alike</td>
+              <td>Same limitation today, but simplest base to layer vertical features onto</td>
+            </tr>
+            <tr>
+              <th scope="row">Known reliability issues</th>
+              <td>Unknown — still being built</td>
+              <td>Nonstandard, no oversight</td>
+              <td>Registration failures, dependent on a confusing external app</td>
+              <td>Stable, if basic</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="writeup">
+        <p>I killed the new project despite the money already spent on it, because due diligence
+        showed it was solving the wrong problem — adding a fourth app to a stack that was already
+        incoherent, when the real issue was that one identical experience was being forced onto
+        merchants with completely different end-user needs. I chose to consolidate around the
+        original Ackroo app specifically because its simplicity was an asset, not a limitation: it
+        was the only foundation stable and standardized enough to build on without inheriting the
+        India outsourcing dependency or the shared app's structural failures. That let us cut the
+        outsourced contract entirely, run the rebuild with one dedicated in-house mobile director,
+        and layer in features merchants would actually pay for — punch cards, vendor-linked
+        promoted ads, self-serve profiles, food-ordering integrations — funded by converting to a
+        recurring monthly SaaS fee instead of a one-time charge. Some free-tier customers who
+        wouldn't pay for the improvement churned out, and that was the right trade: new merchant
+        sign-up landed close to 100%, and net dollar retention actually improved, because we'd
+        finally priced the product to cover what it cost to run instead of eating that cost
+        indefinitely. Reading the water here meant recognizing that the option with the most
+        money and momentum behind it wasn't automatically the right one to finish.</p>
+      </div>
+
+      <div class="carousel">
+        <div class="carousel__track" id="ackroo-carousel">
+          <div class="carousel__slide">
+            <img src="images/ackroo-customer-experience-map.png" alt="Whiteboard customer experience map for the Ackroo mobile app">
+            <p class="carousel__caption">Customer Experience Map — mapping user goals, actions, and sentiment through the full lifecycle</p>
+          </div>
+          <div class="carousel__slide">
+            <img src="images/ackroo-opportunity-solution-tree.png" alt="Opportunity Solution Tree for the Ackroo mobile app">
+            <p class="carousel__caption">Opportunity Solution Tree — one goal, four opportunities, one chosen experiment</p>
+          </div>
+          <div class="carousel__slide">
+            <img src="images/ackroo-testimonials-roadblocks.png" alt="Client testimonials and roadblocks for the Ackroo mobile app">
+            <p class="carousel__caption">Testimonials &amp; Roadblocks — direct client feedback shaping the opportunity space</p>
+          </div>
+          <div class="carousel__slide">
+            <img src="images/ackroo-product-gaps.png" alt="Product gap scoring table for the Ackroo mobile app">
+            <p class="carousel__caption">Product Gaps — scoring the gap between the vision and where the product stood</p>
+          </div>
+          <div class="carousel__slide">
+            <img src="images/ackroo-opportunities.png" alt="Four opportunity areas for the Ackroo mobile app: ROI, UX/UI, Self-Serve, Delight">
+            <p class="carousel__caption">Opportunities — the four levers considered before choosing where to focus</p>
+          </div>
+          <div class="carousel__slide">
+            <img src="images/ackroo-ui-main-redeem.png" alt="Ackroo mobile app UI screens for main and redeem flows">
+            <p class="carousel__caption">UI — Main &amp; Redeem screens, showing the app experience end users actually touched</p>
+          </div>
+        </div>
+        <div class="carousel__controls">
+          <button class="carousel__btn" type="button" onclick="document.getElementById('ackroo-carousel').scrollBy({left:-440,behavior:'smooth'})">&larr; Prev</button>
+          <button class="carousel__btn" type="button" onclick="document.getElementById('ackroo-carousel').scrollBy({left:440,behavior:'smooth'})">Next &rarr;</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <section class="hiw-section" id="shape-for-the-rider">
+  <div class="hiw-inner">
+    <div class="hiw-kicker"><span class="hiw-num">02</span><span class="note">Shape for the rider</span></div>
+    <h2>How I shape for the rider.</h2>
+    <p class="hiw-lede">Experience design: a board is judged in the water, not on the rack.
+    If a flow needs a tooltip to explain itself, the flow is wrong.</p>
+
+    <div class="example">
+      <span class="note">Example — Self Check-In</span>
+      <h3 class="example-title">Designing the intake flow</h3>
+      <p class="example-intro">Self Check-In's entire premise rests on a single intake moment:
+      someone tells us how they're feeling and what they want instead, and from that we build a
+      real, curated itinerary. That moment had two jobs to do at once, in real tension.
+      Emotionally, it had to feel like being asked by a thoughtful friend, not filling out an
+      intake form — especially since burnout and overwhelm were exactly the state most people
+      would be in when they opened it. Functionally, every answer needed to generate real
+      structured data: enough signal to place someone into a specific emotional profile group
+      that determined the actual itinerary they'd receive. I worked through the actual question
+      wording with Claude until each one did both jobs at once, without needing a tooltip or
+      instruction to explain itself.</p>
+
+      <div class="video-frame">
+        <div class="video-frame__notch"></div>
+        <div class="video-frame__screen">
+          <span>iPhone walkthrough video — coming soon</span>
+        </div>
+      </div>
+      <p class="video-caption note">Video walkthrough — first few questions of the intake flow</p>
+
+      <div class="table-wrap">
+        <table class="decision-table">
+          <thead>
+            <tr>
+              <th scope="col">Question</th>
+              <th scope="col">What it feels like to answer</th>
+              <th scope="col">What it's actually capturing</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Week Context</th>
+              <td>A casual check-in — "don't overthink it," permission to just pick one</td>
+              <td>A macro stress/energy signal that calibrates the pacing of everything after it</td>
+            </tr>
+            <tr>
+              <th scope="row">Why Today</th>
+              <td>Validates whatever brought them there, including good reasons like celebration, not just crisis</td>
+              <td>Motivation type — reset vs. connection vs. celebration — which shapes the tone of the itinerary itself</td>
+            </tr>
+            <tr>
+              <th scope="row">Body State</th>
+              <td>Reframes from "how you think you should feel" to how your body actually feels</td>
+              <td>The core emotional-state input driving profile classification</td>
+            </tr>
+            <tr>
+              <th scope="row">Desired Feeling</th>
+              <td>Framed as picking whatever "feels most like relief," not a goal to hit</td>
+              <td>The target emotional outcome the itinerary is designed to deliver</td>
+            </tr>
+            <tr>
+              <th scope="row">Social Battery</th>
+              <td>No judgment either way — solitude and connection are both treated as valid</td>
+              <td>Determines whether the itinerary includes any social or interactive stops</td>
+            </tr>
+            <tr>
+              <th scope="row">Constraints</th>
+              <td>One open, gentle question instead of a battery of accessibility/dietary/budget fields</td>
+              <td>Safety and feasibility filters folded into a single low-pressure ask</td>
+            </tr>
+            <tr>
+              <th scope="row">Location Mapping</th>
+              <td>Framed as "what sounds right for this one," not "select your radius"</td>
+              <td>Determines the geographic scope the itinerary gets built around</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="writeup">
+        <p>The questions that don't appear in that table matter just as much — the flow only
+        asks 2b (what are you celebrating) if someone actually chose "I'm celebrating something,"
+        and only asks which part of Hamilton if they chose to keep things close. Nobody answers a
+        question that doesn't apply to them, which is a big part of why the flow doesn't need
+        explaining as you move through it — it's already reacting to what you told it. Contact
+        information — name, email, phone — comes dead last, after someone has already
+        emotionally invested in the questions, rather than gating the experience behind a signup
+        wall up front. And the logistics that do need to be stated plainly — the specific days
+        and hours we run, the 48-hour lead time — are said once, exactly where they're needed,
+        instead of living in a separate FAQ someone would have to go looking for.</p>
+        <p>The Location Mapping question wasn't part of the original flow — it came from watching
+        real users hit friction after launch. Some were frustrated at being routed across town
+        because they hate traffic; others were disappointed we hadn't sent them somewhere new.
+        That split told me it wasn't really a logistics question, it was a personality signal, so
+        I added it as an explicit choice instead of guessing. Users have also flagged a real
+        limitation: intake happens at booking, but the actual experience can be three to four
+        weeks later, so the emotional state someone reports isn't necessarily the one they'll be
+        in on the day. That's a legitimate gap, and it's also a good example of holding scope —
+        the fix (resending intake closer to the actual experience date) is a real idea for a
+        future version, not this one, because the priority right now is getting a clean, solid
+        read on how version one performs before adding more moving parts.</p>
+        <p>One more deliberate choice sits underneath all of this: the intake questions only
+        appear after someone has paid, not before. I went back and forth on the logistics of
+        that for a while, but landed on it for a specific reason — the questions themselves,
+        combined with the profile-building logic on the back end, are close to the actual secret
+        sauce of the product. Showing them to anyone browsing before they've bought in would let
+        people reverse-engineer how the personalization works without ever paying for it. Asking
+        for that information after commitment, not before, protects the mechanism the entire
+        product depends on. If a question ever needed a tooltip to make sense, that was the
+        signal to rewrite the question, not add the tooltip.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <section class="hiw-section" id="style-is-substance">
+    <div class="hiw-inner">
+      <div class="hiw-kicker"><span class="hiw-num">03</span><span class="note">Style is substance</span></div>
+      <h2>Why style is substance.</h2>
+      <p class="hiw-lede">Brand, voice, and UI polish aren't garnish — they're part of
+      how the product actually functions.</p>
+
+      <div class="example">
+        <span class="note">Example — Self Check-In</span>
+        <h3 class="example-title">The disclaimer that had to sound like us</h3>
+        <p class="example-intro">Every page that touches booking or intake carries a short line
+        making clear Self Check-In isn't a mental health service, with a link out to real support
+        for anyone who needs more than a curated day can give. It wasn't my idea originally — it
+        came out of a conversation with Claude about the responsibility of building something for
+        people carrying burnout — but once it was in front of me I didn't want it to read like
+        legal boilerplate. It needed to sound like the rest of the brand: warm, plain, a little
+        literary. Copy like this is easy to bolt on as an afterthought. I wanted it to feel like
+        it was written by the same person who wrote everything else on the page.</p>
+
+        <div class="carousel carousel--portrait">
+          <div class="carousel__track" id="style-carousel">
+            <div class="carousel__slide">
+              <img src="images/style-pricing-page.png" alt="Self Check-In pricing page showing the half-day experience price, a customer testimonial, and the footer disclaimer">
+              <p class="carousel__caption">Pricing page — the disclaimer sits quietly in the footer, never competing with the testimonial or the CTA above it</p>
+            </div>
+            <div class="carousel__slide">
+              <img src="images/style-genuinely-small.png" alt="Dark section reading 'Self Check-In is bootstrapped, independent, and genuinely small'">
+              <p class="carousel__caption">The same plain, honest voice shows up outside the disclaimer too — "genuinely small" instead of the usual founder-story polish</p>
+            </div>
+            <div class="carousel__slide">
+              <img src="images/style-post-intake-confirmation.png" alt="Post-intake confirmation screen reading 'You're in good hands' with the disclaimer repeated ahead of the confirmation message">
+              <p class="carousel__caption">Post-intake confirmation — the disclaimer appears again here, right before someone's information gets used, not just once and forgotten</p>
+            </div>
+            <div class="carousel__slide">
+              <img src="images/style-footer-disclaimer.png" alt="Closing footer section with the 'A half-day is enough to feel different' CTA and the full disclaimer text">
+              <p class="carousel__caption">Closing footer — same line, same tone, every time it appears</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="writeup">
+          <p>I kept the disclaimer short and repeated it everywhere it was actually relevant —
+          pricing, post-intake, the footer — rather than writing it once and burying it on a
+          policies page nobody reads. Linking it to a real crisis resource, not just a vague
+          "seek help" line, was the non-negotiable part. Everything else about it — the phrasing,
+          where it sits, how much visual weight it gets — got the same attention as any other line
+          of copy on the site, because a disclaimer that reads like it was pasted in from a
+          template undermines the exact trust the rest of the brand is built on.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hiw-section" id="paddle-back-out">
+    <div class="hiw-inner">
+      <div class="hiw-kicker"><span class="hiw-num">04</span><span class="note">Paddle back out</span></div>
+      <h2>How I paddle back out.</h2>
+      <p class="hiw-lede">Shipping from scratch means wiping out in public. This is the
+      part where I show the recovery, not just the highlight reel.</p>
+
+      <div class="example">
+        <span class="note">Example — Self Check-In</span>
+        <h3 class="example-title">From manual messaging to automated dispatch</h3>
+        <p class="example-intro">Self Check-In's testing phase ran entirely on manual SMS. I
+        sat at my computer for the full length of every experience — sometimes hours — watching
+        for a reply so I could send the next message by hand, timed to wherever the person
+        actually was in their day. It worked when I was running one person at a time. It stopped
+        working the moment I wasn't.</p>
+
+        <div class="carousel">
+          <div class="carousel__track" id="paddle-carousel">
+            <div class="carousel__slide">
+              <img src="images/paddle-dispatch-dashboard.jpg" alt="Self Check-In dispatch dashboard showing real-time SMS advancement across active experiences">
+              <p class="carousel__caption">The dispatch site I built — every active experience visible in real time, with Hold/Reply controls instead of me babysitting a phone</p>
+            </div>
+            <div class="carousel__slide">
+              <img src="images/paddle-stalled-alert.jpg" alt="iPhone SMS conversation flagged as stalled for over 90 minutes">
+              <p class="carousel__caption">The exact failure mode automation fixed — a conversation gone quiet, with no reliable way to know if a message had landed</p>
+            </div>
+            <div class="carousel__slide">
+              <img src="images/paddle-impact.jpg" alt="Slide listing the impact of automating Self Check-In's messaging: reduced manual effort, improved insight, supported acquisition">
+              <p class="carousel__caption">What automating this actually bought me, beyond just getting my evenings back</p>
+            </div>
+          </div>
+          <div class="carousel__controls">
+            <button class="carousel__btn" type="button" onclick="document.getElementById('paddle-carousel').scrollBy({left:-440,behavior:'smooth'})">&larr; Prev</button>
+            <button class="carousel__btn" type="button" onclick="document.getElementById('paddle-carousel').scrollBy({left:440,behavior:'smooth'})">Next &rarr;</button>
+          </div>
+        </div>
+
+        <div class="writeup">
+          <p>The wipeout was slow, not sudden. Twilio changed its developer portal mid-build, and
+          it started hanging and freezing on me — the logs wouldn't update in real time, so I'd
+          send someone their next message and then have no way to know whether it had actually
+          gone through. That's a bad feeling on its own; it's worse when the thing on the other
+          end is a real person mid-experience, waiting on you. And the setup only worked for one
+          person at a time — the front end wasn't built for concurrency, so running two
+          experiences at once meant real risk of sending the wrong message to the wrong person.
+          None of that was sustainable, and testing more than one person at a time — which I
+          needed to do — made it actively worse.</p>
+          <p>I automated the SMS delivery ahead of schedule, earlier than I'd planned to take that
+          on, because the manual version was costing me more than the build would. It took real
+          time to get right. Once it was live, it did more than remove the babysitting: I built a
+          proper dispatch site on top of it, so I can see every active experience at a glance,
+          with stalled conversations flagged automatically instead of me guessing from a silent
+          log. And because the same infrastructure was already in place, I shipped a second thing
+          I hadn't originally planned for this stage — automated feedback collection and referral
+          prompts once an experience wraps, so every completed experience now feeds the next one
+          instead of just ending.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hiw-section" id="surf-whats-in-front-of-you">
+    <div class="hiw-inner">
+      <div class="hiw-kicker"><span class="hiw-num">05</span><span class="note">Surf what's in front of you</span></div>
+      <h2>Surfing what's in front of me.</h2>
+      <p class="hiw-lede">Small teams, small budgets — you don't get to order the
+      conditions. You build with what's actually in front of you.</p>
+
+      <div class="example">
+        <span class="note">Example — Self Check-In</span>
+        <h3 class="example-title">Building it without an engineering team</h3>
+        <p class="example-intro">I'm not a developer, and Self Check-In didn't have the budget
+        to hire one before I knew whether the core idea was worth building at all. The
+        conventional path — raise or save enough to bring on an engineer, spec the product,
+        wait for a build — wasn't available to me, and honestly wasn't the right board to
+        paddle out on anyway. So I used Claude as my technical build partner: writing and
+        debugging the SMS flow, working through the intake question logic with me, later
+        building the automated dispatch system that replaced my manual texting. None of that
+        would have shipped this fast, or this cheap, waiting on a hiring process.</p>
+
+        <div class="table-wrap">
+          <table class="decision-table">
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col">Hire a dev team first</th>
+                <th scope="col">What I actually did</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Team</th>
+                <td>1–2 developers hired before writing any product code</td>
+                <td>No developers — built and shipped solo, with Claude as the technical partner</td>
+              </tr>
+              <tr>
+                <th scope="row">Cost before first real user</th>
+                <td>Tens of thousands in salary or contractor fees, spent before validating anything</td>
+                <td>$0 in engineering spend</td>
+              </tr>
+              <tr>
+                <th scope="row">Time to first real test</th>
+                <td>Months — hiring, onboarding, and spec-writing before a developer even starts</td>
+                <td>Weeks — straight from idea to a working SMS flow with a real person on the other end</td>
+              </tr>
+              <tr>
+                <th scope="row">Iteration speed</th>
+                <td>Bottlenecked by developer availability and sprint planning</td>
+                <td>Same-day — question wording, message timing, flow logic, changed directly</td>
+              </tr>
+              <tr>
+                <th scope="row">Risk</th>
+                <td>Lower technical risk, but real financial risk if the idea doesn't land</td>
+                <td>Real technical debt and no second set of eyes on the code, but zero financial risk from an unproven idea</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="writeup">
+          <p>This wasn't a workaround I'm apologizing for — it was a deliberate bet. Waiting to
+          fund an engineering team before testing whether an emotionally-guided itinerary could
+          actually make someone feel different would have meant months of delay and real money
+          spent before knowing if anyone wanted this at all. Working directly with Claude let me
+          write, debug, and ship the actual mechanics of the product myself — the SMS flow, the
+          profile-building logic behind intake, the dispatch automation — without a sprint cycle
+          or a team to loop in first.</p>
+          <p>I'm honest with myself about the trade-off. I'm not a professional developer, so
+          there's real technical debt sitting in that codebase, and I don't have a second set of
+          eyes catching the blind spots an actual engineering team would catch. But the goal at
+          this stage was never to build enterprise infrastructure — it was to find out, fast and
+          cheaply, whether the core idea worked. Given the conditions I actually had, that was
+          the right board to be on.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<hr class="rule" style="width:var(--content);margin-inline:auto">
+
+<footer class="hiw-foot wrap">
+  <p>Want to talk through any of this? <a href="index.html#contact" style="color:var(--glass);text-decoration:underline">Get in touch</a>.</p>
+</footer>
+
+</body>
+</html>
